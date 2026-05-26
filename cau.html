@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate CS Revision & Interactive Exam</title>
+    <style>
+        :root { --p: #2563eb; --s: #64748b; --bg: #f8fafc; --txt: #1e293b; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; margin: 0; background: var(--bg); color: var(--txt); }
+        nav { background: #1e293b; color: white; padding: 1rem; position: sticky; top: 0; display: flex; justify-content: center; gap: 20px; z-index: 100; }
+        nav a { color: white; text-decoration: none; font-weight: bold; cursor: pointer; padding: 5px 15px; border-radius: 4px; transition: 0.3s; }
+        nav a:hover { background: var(--p); }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 20px; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        .hidden { display: none; }
+        h1, h2, h3 { color: var(--p); border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .topic-box { background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 5px solid var(--p); }
+        
+        /* Interactive Elements */
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+        button { background: var(--p); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #1d4ed8; }
+        
+        .mc-option { display: block; background: #fff; border: 2px solid #e2e8f0; padding: 12px; margin: 8px 0; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .mc-option:hover { border-color: var(--p); background: #eff6ff; }
+        .correct { background: #dcfce7 !important; border-color: #22c55e !important; }
+        .wrong { background: #fee2e2 !important; border-color: #ef4444 !important; }
+        
+        .mock-input { border: none; border-bottom: 2px solid #94a3b8; background: #fffbeb; padding: 10px; font-family: inherit; resize: vertical; min-height: 80px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a onclick="showSection('notes')">Study Notes</a>
+    <a onclick="showSection('mc-gate')">MC Quiz</a>
+    <a onclick="showSection('mock-gate')">Mock Exam</a>
+</nav>
+
+<div class="container">
+    
+    <section id="notes">
+        <div class="card">
+            <h1>Computer Systems Comprehensive Revision</h1>
+            
+            <div class="grid">
+                <div class="topic-box">
+                    <h3>1. CPU & Architecture</h3>
+                    <p><strong>Von Neumann Architecture:</strong> The basic structure where data and instructions are stored in the same memory.</p>
+                    <ul>
+                        <li><strong>Clock Speed:</strong> Measured in Hertz (GHz). Number of cycles per second.</li>
+                        <li><strong>ALU (Arithmetic Logic Unit):</strong> Performs calculations and logic.</li>
+                        <li><strong>Registers:</strong> PC (holds next address), MAR (memory address), MDR (memory data), CIR (current instruction), Accumulator (results).</li>
+                        <li><strong>Buses:</strong> Address (one-way), Data (two-way), Control (commands).</li>
+                        <li><strong>Cache:</strong> Fast, small memory near CPU to reduce <strong>latency</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="topic-box">
+                    <h3>2. Hardware & Storage</h3>
+                    <ul>
+                        <li><strong>RAM vs ROM:</strong> RAM is volatile (lost on power off); ROM is non-volatile (stores bootup).</li>
+                        <li><strong>Primary:</strong> RAM, Cache. <strong>Secondary:</strong> Hard Disk (Magnetic), SSD (Flash), Optical (CD/DVD).</li>
+                        <li><strong>Access:</strong> Sequential (Tape) vs Direct (HDD/SSD).</li>
+                        <li><strong>GPU:</strong> Specialized for graphics/parallel processing.</li>
+                    </ul>
+                </div>
+
+                <div class="topic-box">
+                    <h3>3. I/O & Peripherals</h3>
+                    <ul>
+                        <li><strong>Printers:</strong> <em>Inkjet</em> (liquid ink), <em>Laser</em> (toner/heat), <em>3D</em> (additive), <em>Dot Matrix</em> (impact), <em>Plotter</em> (vectors).</li>
+                        <li><strong>Input:</strong> Barcode (1D lines) vs QR Code (2D squares), Biometrics (fingerprint), Smart Cards (chips).</li>
+                        <li><strong>Display:</strong> Pixel Density (PPI), Color Depth (bits per pixel), Resolution ($W \times H$).</li>
+                        <li><strong>Ports:</strong> HDMI (AV), DVI (Video), VGA (Analog), DisplayPort.</li>
+                    </ul>
+                </div>
+
+                <div class="topic-box">
+                    <h3>4. Software & OS</h3>
+                    <ul>
+                        <li><strong>System vs Application:</strong> OS/Drivers vs Word/Games.</li>
+                        <li><strong>OS Functions:</strong> Memory management, UI (GUI vs CLI), Utility (Defragmentation, Backup).</li>
+                        <li><strong>Processing:</strong> Batch (groups), Real-time (instant), Parallel (multi-core), Distributed (multi-computer).</li>
+                        <li><strong>Virtualization:</strong> Running multiple virtual systems on one physical hardware.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mc-gate" class="hidden">
+        <div class="card" style="text-align: center;">
+            <h2>Multiple Choice Challenge</h2>
+            <p>Test your knowledge with immediate feedback.</p>
+            <div style="max-width: 300px; margin: auto;">
+                <label>Difficulty:</label>
+                <select id="mc-diff">
+                    <option value="easy">Standard (DSE Core)</option>
+                    <option value="hard">Expert (DSE Elective)</option>
+                </select>
+                <label>Questions:</label>
+                <input type="number" id="mc-qty" value="5" min="3" max="15">
+                <button onclick="initQuiz()">Start Quiz</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="mc-game" class="hidden">
+        <div class="card">
+            <div id="mc-content"></div>
+            <div id="mc-feedback" class="hidden" style="margin-top:20px; padding:15px; border-radius:8px;"></div>
+            <button id="mc-next-btn" class="hidden" onclick="nextMc()">Next Question</button>
+        </div>
+    </section>
+
+    <section id="mock-gate" class="hidden">
+        <div class="card" style="text-align: center;">
+            <h2>DSE Interactive Mock Exam</h2>
+            <p>Full paper format. You can type your answers and get a predicted grade.</p>
+            <select id="mock-lvl" style="max-width:300px;">
+                <option value="std">Standard DSE</option>
+                <option value="star">Level 5** Target</option>
+            </select><br>
+            <button onclick="initMock()">Generate Interactive Paper</button>
+        </div>
+    </section>
+
+    <section id="mock-paper" class="hidden">
+        <div class="card">
+            <h1 style="text-align:center;">ICT Mock Paper</h1>
+            <div id="paper-area"></div>
+            <hr>
+            <button onclick="submitMock()">Submit and Grade Paper</button>
+        </div>
+        <div id="mock-results" class="card hidden"></div>
+    </section>
+
+</div>
+
+<script>
+    // --- DATA ---
+    const mcDb = [
+        { q: "Which component coordinates the movement of data between the CPU and memory?", a: "Control Bus", opts: ["Data Bus", "Address Bus", "Control Bus", "ALU"], diff: "easy" },
+        { q: "What happens during a 'Defragmentation' utility process?", a: "Rearranges file fragments into contiguous sectors", opts: ["Deletes temporary files", "Rearranges file fragments into contiguous sectors", "Compresses the entire drive", "Updates hardware drivers"], diff: "easy" },
+        { q: "A QR code is superior to a Barcode because:", a: "It can store data in two dimensions", opts: ["It uses laser technology", "It can store data in two dimensions", "It requires no light to read", "It is smaller in physical size only"], diff: "easy" },
+        { q: "Which register stores the result of the current arithmetic operation?", a: "Accumulator", opts: ["Program Counter", "MDR", "MAR", "Accumulator"], diff: "hard" },
+        { q: "In a 'Real-time Processing' system, the most critical factor is:", a: "Response time", opts: ["Throughput", "Response time", "Power consumption", "User interface"], diff: "hard" }
+    ];
+
+    const longQuestions = [
+        { q: "Compare SSD and HDD in terms of data access speed and physical durability. (4 marks)", key: ["ssd faster", "no moving parts", "durability", "magnetic"] },
+        { q: "Describe the function of the Program Counter (PC) during the Machine Cycle. (3 marks)", key: ["next instruction", "increment", "address"] },
+        { q: "Explain one advantage of using Virtualization in a data center. (3 marks)", key: ["resource", "cost", "server", "isolation"] }
+    ];
+
+    let currentMcSet = [];
+    let mcIdx = 0;
+    let mcScore = 0;
+
+    // --- LOGIC ---
+    function showSection(id) {
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    // --- MC QUIZ ---
+    function initQuiz() {
+        const diff = document.getElementById('mc-diff').value;
+        const qty = parseInt(document.getElementById('mc-qty').value);
+        currentMcSet = mcDb.filter(x => x.diff === diff).sort(() => Math.random() - 0.5).slice(0, qty);
+        mcIdx = 0; mcScore = 0;
+        showSection('mc-game');
+        renderMc();
+    }
+
+    function renderMc() {
+        const data = currentMcSet[mcIdx];
+        let html = `<h3>Question ${mcIdx + 1} of ${currentMcSet.length}</h3><p>${data.q}</p>`;
+        data.opts.sort(() => Math.random() - 0.5).forEach(o => {
+            html += `<div class="mc-option" onclick="checkMc('${o}', this)">${o}</div>`;
+        });
+        document.getElementById('mc-content').innerHTML = html;
+        document.getElementById('mc-feedback').classList.add('hidden');
+        document.getElementById('mc-next-btn').classList.add('hidden');
+    }
+
+    function checkMc(choice, el) {
+        const correct = currentMcSet[mcIdx].a;
+        document.querySelectorAll('.mc-option').forEach(opt => opt.style.pointerEvents = 'none');
+        
+        const feedback = document.getElementById('mc-feedback');
+        feedback.classList.remove('hidden');
+
+        if(choice === correct) {
+            el.classList.add('correct');
+            feedback.innerHTML = "<strong>✓ Correct!</strong>";
+            feedback.style.background = "#dcfce7";
+            mcScore++;
+        } else {
+            el.classList.add('wrong');
+            feedback.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is: ${correct}. <br><em>Explanation: This is a core part of the Von Neumann architecture.</em>`;
+            feedback.style.background = "#fee2e2";
+        }
+        document.getElementById('mc-next-btn').classList.remove('hidden');
+    }
+
+    function nextMc() {
+        mcIdx++;
+        if(mcIdx < currentMcSet.length) renderMc();
+        else {
+            const pct = (mcScore/currentMcSet.length)*100;
+            document.getElementById('mc-content').innerHTML = `<h2>Quiz Complete!</h2><p>You scored ${mcScore}/${currentMcSet.length} (${pct}%). Predicted Grade: ${pct > 80 ? '5**' : '4'}</p>`;
+            document.getElementById('mc-next-btn').classList.add('hidden');
+            document.getElementById('mc-feedback').classList.add('hidden');
+        }
+    }
+
+    // --- MOCK EXAM ---
+    function initMock() {
+        showSection('mock-paper');
+        const area = document.getElementById('paper-area');
+        let html = "<h3>Section A: MC Questions</h3>";
+        mcDb.forEach((q, i) => {
+            html += `<p>${i+1}. ${q.q}</p><select id="mock-mc-${i}"><option value="">--Select--</option>`;
+            q.opts.forEach(o => html += `<option value="${o}">${o}</option>`);
+            html += `</select>`;
+        });
+
+        html += "<h3>Section B: Conventional Questions</h3>";
+        longQuestions.forEach((lq, i) => {
+            html += `<p><strong>Q${i+1}:</strong> ${lq.q}</p><textarea class="mock-input" id="mock-lq-${i}" placeholder="Type your answer here..."></textarea>`;
+        });
+        area.innerHTML = html;
+    }
+
+    function submitMock() {
+        let total = 0;
+        let report = "<h2>Exam Feedback</h2>";
+        
+        // Grade MC
+        mcDb.forEach((q, i) => {
+            const userAns = document.getElementById(`mock-mc-${i}`).value;
+            if(userAns === q.a) total += 2;
+        });
+
+        // Simulating Long Question Grading (Keyword search)
+        longQuestions.forEach((lq, i) => {
+            const userAns = document.getElementById(`mock-lq-${i}`).value.toLowerCase();
+            let points = 0;
+            lq.key.forEach(k => { if(userAns.includes(k)) points++; });
+            total += Math.min(points, 4); // Cap at max marks
+        });
+
+        const res = document.getElementById('mock-results');
+        res.classList.remove('hidden');
+        let grade = total > 15 ? "5**" : total > 10 ? "4" : "Level 2";
+        res.innerHTML = `<h3>Your Final Score: ${total}</h3><p>Predicted DSE Grade: <strong>${grade}</strong></p><p>Review the study notes for topics you missed!</p>`;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>
